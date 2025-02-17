@@ -23,6 +23,7 @@ const PersonalInformationScreen = ({ navigation }: any) => {
       return;
     }
     try {
+      await AsyncStorage.removeItem("userData");
       await AsyncStorage.setItem(
         "user_info",
         JSON.stringify({

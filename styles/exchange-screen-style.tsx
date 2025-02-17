@@ -5,12 +5,20 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     paddingHorizontal: 20,
-    paddingTop: 40,
+    paddingTop: 60,
   },
-  backButton: {
+  floatingButton: {
+    backgroundColor: "#23EBC3",
     position: "absolute",
-    top: 40,
-    left: 20,
+    bottom: 30,
+    right: 20,
+    padding: 15,
+    borderRadius: 30,
+  },
+  floatingButtonText: {
+    fontSize: 24,
+    color: "#fff",
+    textAlign: "center",
   },
   title: {
     fontSize: 22,

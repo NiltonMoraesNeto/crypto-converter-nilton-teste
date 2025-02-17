@@ -101,9 +101,12 @@ const CreateAccountScreen = ({ navigation }: any) => {
         <Text style={styles.buttonText}>Send Code</Text>
       </TouchableOpacity>
 
-      <Text style={styles.signInText}>
-        Already have an account? <Text style={styles.signInLink}>Sign In</Text>
-      </Text>
+      <TouchableOpacity onPress={() => navigation.navigate("SignInScreen")}>
+        <Text style={styles.signInText}>
+          Already have an account?{" "}
+          <Text style={styles.signInLink}>Sign In</Text>
+        </Text>
+      </TouchableOpacity>
 
       <Text style={styles.termsText}>
         By creating an account you agree to our{" "}
