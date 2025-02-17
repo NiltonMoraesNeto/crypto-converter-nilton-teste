@@ -1,0 +1,30 @@
+{
+  "expo": {
+    "name": "crypto-converter-nilton-teste",
+    "slug": "crypto-converter-nilton-teste",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.niltonmoraes.cryptoconverterniltonteste"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.niltonmoraes.cryptoconverterniltonteste"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
+}
