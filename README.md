@@ -3,5 +3,5 @@ Projeto feito em [React Native](https://reactnative.dev/) com [Expo](https://exp
 
 ```bash
 npm i
-npm start
+npx expo start -c
 ```
