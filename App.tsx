@@ -14,16 +14,19 @@ import EnterPinScreen from "./screens/EnterPinScreen";
 import LandingPage from "./screens/LandingPageScreen";
 import CoinDetailsScreen from "./screens/CoinDetailsScreen";
 import ExchangeScreen from "./screens/ExchangeScreen";
+import { FavoritesProvider } from "./context/FavoritesContext";
 
 const Stack = createStackNavigator();
 
 function App() {
   return (
-    <PaperProvider>
-      <NavigationContainer>
-        <AppNavigator />
-      </NavigationContainer>
-    </PaperProvider>
+    <FavoritesProvider>
+      <PaperProvider>
+        <NavigationContainer>
+          <AppNavigator />
+        </NavigationContainer>
+      </PaperProvider>
+    </FavoritesProvider>
   );
 }
 

@@ -2,20 +2,21 @@ import React, { useState, useEffect } from "react";
 import { fetchCryptoData, searchCrypto } from "../services/coins-service";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { FormLandingPageScreen } from "../components/form-landing-page-screen";
+import { useFavorites } from "../context/FavoritesContext"; // 🚀 Importando o contexto
 
 const defaultCoins = ["bitcoin", "ethereum", "tether"];
 
 const LandingPage = ({ navigation }: any) => {
   const [coins, setCoins] = useState<any[]>([]);
-  const [favoriteCoins, setFavoriteCoins] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [firstName, setFirstName] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [error, setError] = useState(false);
 
+  const { favoriteCoins, toggleFavorite } = useFavorites(); // 🚀 Obtendo os favoritos
+
   useEffect(() => {
     loadCryptoData();
-    loadFavoriteCoins();
   }, []);
 
   useEffect(() => {
@@ -48,64 +49,9 @@ const LandingPage = ({ navigation }: any) => {
     }
   };
 
-  const loadFavoriteCoins = async () => {
-    try {
-      const storedFavorites = await AsyncStorage.getItem("favoriteCoins");
-      if (storedFavorites) {
-        const favoriteIds = JSON.parse(storedFavorites);
-        const favoriteData = await fetchCryptoData(favoriteIds);
-        setFavoriteCoins(favoriteData);
-      }
-    } catch (error) {
-      console.error("Error loading favorite coins:", error);
-    }
-  };
-
-  useEffect(() => {
-    const fetchSearchResults = async () => {
-      if (searchQuery.trim() === "") {
-        loadCryptoData();
-      } else {
-        setLoading(true);
-        setError(false);
-        try {
-          const searchResults = await searchCrypto(searchQuery);
-          setCoins(searchResults);
-        } catch (err) {
-          console.error("Error searching crypto:", err);
-          setError(true);
-        } finally {
-          setLoading(false);
-        }
-      }
-    };
-
-    const delayDebounce = setTimeout(fetchSearchResults, 500); // Debounce para evitar chamadas excessivas
-
-    return () => clearTimeout(delayDebounce);
-  }, [searchQuery]);
-
   const handleOpenDetails = async (id: any) => {
     await AsyncStorage.setItem("coinId", id);
     navigation.navigate("CoinDetailsScreen");
-  };
-
-  const toggleFavorite = async (id: string) => {
-    try {
-      const storedFavorites = await AsyncStorage.getItem("favoriteCoins");
-      let favoriteIds = storedFavorites ? JSON.parse(storedFavorites) : [];
-
-      if (favoriteIds.includes(id)) {
-        favoriteIds = favoriteIds.filter((coinId: string) => coinId !== id);
-      } else {
-        favoriteIds.push(id);
-      }
-
-      await AsyncStorage.setItem("favoriteCoins", JSON.stringify(favoriteIds));
-      loadFavoriteCoins();
-    } catch (error) {
-      console.error("Error toggling favorite:", error);
-    }
   };
 
   return (
@@ -113,9 +59,9 @@ const LandingPage = ({ navigation }: any) => {
       firstName={firstName}
       searchQuery={searchQuery}
       setSearchQuery={setSearchQuery}
-      favoriteCoins={favoriteCoins}
+      favoriteCoins={favoriteCoins} // 🚀 Agora os favoritos são globais
       handleOpenDetails={handleOpenDetails}
-      toggleFavorite={toggleFavorite}
+      toggleFavorite={toggleFavorite} // 🚀 Função global
       loading={loading}
       error={error}
       coins={coins}

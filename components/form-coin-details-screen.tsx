@@ -21,22 +21,32 @@ export function FormCoinDetailsScreen({
       </View>
 
       <View style={styles.coinInfo}>
-        <Image source={{ uri: coin.image }} style={styles.coinIcon} />
-        <Text style={styles.coinName}>{coin.name}</Text>
-        <Text style={styles.coinPrice}>${coin.price}</Text>
+        <Image source={{ uri: coin?.image.small }} style={styles.coinIcon} />
+        <Text style={styles.coinName}>{coin?.name}</Text>
+        <Text style={styles.coinPrice}>
+          ${coin?.market_data?.current_price?.brl}
+        </Text>
       </View>
 
       <Text style={styles.sectionTitle}>Historical Price</Text>
       <View style={styles.detailsContainer}>
-        <Text style={styles.detailItem}>Market Cap: ${coin.marketCap}</Text>
         <Text style={styles.detailItem}>
-          24h Range: ${coin.low_24h} - ${coin.high_24h}
+          Market Cap: ${coin?.market_cap_rank}
         </Text>
         <Text style={styles.detailItem}>
-          7D Range: ${coin.low_7d} - ${coin.high_7d}
+          24h Range: ${coin?.market_data?.current_price?.brl} - $
+          {coin?.market_data.market_cap_change_24h_in_currency.brl}
         </Text>
-        <Text style={styles.detailItem}>All-Time High: ${coin.ath}</Text>
-        <Text style={styles.detailItem}>All-Time Low: ${coin.atl}</Text>
+        <Text style={styles.detailItem}>
+          7D Range: ${coin?.market_data?.current_price?.brl} - $
+          {coin?.market_data.price_change_percentage_7d_in_currency.brl}
+        </Text>
+        <Text style={styles.detailItem}>
+          All-Time High: ${coin?.market_data.ath.brl}
+        </Text>
+        <Text style={styles.detailItem}>
+          All-Time Low: ${coin?.market_data.atl.brl}
+        </Text>
       </View>
     </View>
   );

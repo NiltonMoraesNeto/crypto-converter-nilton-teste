@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import api from "./api";
+import { CryptoData, SearchResponse } from "../models/crypto-data";
 
 export const fetchCryptoData = async (coins: string[]) => {
   try {
@@ -42,19 +43,19 @@ export const searchCrypto = async (query: string) => {
 
 export const fetchCryptoById = async (coinId: string) => {
   try {
-    const cacheKey = `crypto_${coinId}`;
-    const cachedData = await AsyncStorage.getItem(cacheKey);
+    //const cacheKey = `crypto_${coinId}`;
+    // const cachedData = await AsyncStorage.getItem(cacheKey);
 
-    if (cachedData) {
-      return JSON.parse(cachedData);
-    }
+    // if (cachedData) {
+    //   return JSON.parse(cachedData);
+    // }
 
     const response = await api.get(`/coins/${coinId}`);
     const data = response.data;
 
     // Armazena no cache por 5 minutos
-    await AsyncStorage.setItem(cacheKey, JSON.stringify(data));
-    setTimeout(() => AsyncStorage.removeItem(cacheKey), 5 * 60 * 1000);
+    // await AsyncStorage.setItem(cacheKey, JSON.stringify(data));
+    // setTimeout(() => AsyncStorage.removeItem(cacheKey), 5 * 60 * 1000);
 
     return data;
   } catch (error) {
