@@ -35,6 +35,30 @@ const LandingPage = ({ navigation }: any) => {
     loadUserData();
   }, []);
 
+  useEffect(() => {
+    const fetchSearchResults = async () => {
+      if (searchQuery.trim() === "") {
+        loadCryptoData();
+      } else {
+        setLoading(true);
+        setError(false);
+        try {
+          const searchResults = await searchCrypto(searchQuery);
+          setCoins(searchResults);
+        } catch (err) {
+          console.error("Error searching crypto:", err);
+          setError(true);
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+
+    const delayDebounce = setTimeout(fetchSearchResults, 500); // Debounce para evitar chamadas excessivas
+
+    return () => clearTimeout(delayDebounce);
+  }, [searchQuery]);
+
   const loadCryptoData = async () => {
     setLoading(true);
     setError(false);
