@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  ActivityIndicator,
-  Image,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, ActivityIndicator, TouchableOpacity } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { fetchCryptoById } from "../services/coins-service";
 import { styles } from "../styles/coin-details-screen-style";
@@ -57,7 +51,6 @@ const CoinDetailsScreen = ({ navigation }: any) => {
   };
 
   const toggleFavorite = async (id: string) => {
-    console.log("🚀  id - ", id);
     try {
       const storedFavorites = await AsyncStorage.getItem("favoriteCoins");
       let favoriteIds = storedFavorites ? JSON.parse(storedFavorites) : [];

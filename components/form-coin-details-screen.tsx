@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, TextInput, Image } from "react-native";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 import { styles } from "../styles/coin-details-screen-style";
 import { FormCoinDetailsProps } from "../models/form-coin-details-props";
 

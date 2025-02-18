@@ -1,17 +1,7 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  FlatList,
-  TouchableOpacity,
-  ActivityIndicator,
-  Image,
-  SafeAreaView,
-} from "react-native";
-import { styles } from "../styles/landing-page-screen-style";
 import { fetchCryptoData, searchCrypto } from "../services/coins-service";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { FormLandingPageScreen } from "../components/form-landing-page-screen";
 
 const defaultCoins = ["bitcoin", "ethereum", "tether"];
 
@@ -101,7 +91,6 @@ const LandingPage = ({ navigation }: any) => {
   };
 
   const toggleFavorite = async (id: string) => {
-    console.log("🚀  id - ", id);
     try {
       const storedFavorites = await AsyncStorage.getItem("favoriteCoins");
       let favoriteIds = storedFavorites ? JSON.parse(storedFavorites) : [];
@@ -120,80 +109,18 @@ const LandingPage = ({ navigation }: any) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.welcomeText}>Welcome, {firstName}</Text>
-      </View>
-
-      <View style={styles.searchContainer}>
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Search"
-          value={searchQuery}
-          onChangeText={setSearchQuery} // Atualiza o estado ao digitar
-        />
-      </View>
-
-      {/* Lista de moedas favoritas */}
-      <View style={styles.favoritesContainer}>
-        <Text style={styles.favoritesTitle}>Favorites</Text>
-        {favoriteCoins.length === 0 ? (
-          <Text style={styles.noFavoritesText}>No favorite coins yet.</Text>
-        ) : (
-          <FlatList
-            data={favoriteCoins}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
-              <TouchableOpacity onPress={() => handleOpenDetails(item.id)}>
-                <View style={styles.coinItem}>
-                  <Image source={{ uri: item.image }} style={styles.coinIcon} />
-                  <Text style={styles.coinName}>{item.name}</Text>
-                  <Text style={styles.coinPrice}>≈ R$ {item.price}</Text>
-                  <TouchableOpacity onPress={() => toggleFavorite(item.id)}>
-                    <Text style={styles.favoriteButton}>★</Text>
-                  </TouchableOpacity>
-                </View>
-              </TouchableOpacity>
-            )}
-          />
-        )}
-      </View>
-
-      {/* Lista de moedas padrões ou pesquisadas */}
-      <View style={styles.bookmarksContainer}>
-        <Text style={styles.bookmarkTitle}>Bookmarks</Text>
-        {loading ? (
-          <ActivityIndicator size="large" color="#23EBC3" />
-        ) : error ? (
-          <Text style={styles.errorText}>
-            Failed to load data. Please try again later.
-          </Text>
-        ) : (
-          <FlatList
-            data={coins}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
-              <TouchableOpacity onPress={() => handleOpenDetails(item.id)}>
-                <View style={styles.coinItem}>
-                  <Image source={{ uri: item.image }} style={styles.coinIcon} />
-                  <Text style={styles.coinName}>{item.name}</Text>
-                  <Text style={styles.coinPrice}>≈ R$ {item.price}</Text>
-                  <TouchableOpacity onPress={() => toggleFavorite(item.id)}>
-                    <Text style={styles.favoriteButton}>☆</Text>
-                  </TouchableOpacity>
-                </View>
-              </TouchableOpacity>
-            )}
-          />
-        )}
-      </View>
-      <TouchableOpacity
-        style={styles.floatingButton}
-        onPress={() => navigation.navigate("ExchangeScreen")}
-      >
-        <Text style={styles.floatingButtonText}>⇆</Text>
-      </TouchableOpacity>
-    </SafeAreaView>
+    <FormLandingPageScreen
+      firstName={firstName}
+      searchQuery={searchQuery}
+      setSearchQuery={setSearchQuery}
+      favoriteCoins={favoriteCoins}
+      handleOpenDetails={handleOpenDetails}
+      toggleFavorite={toggleFavorite}
+      loading={loading}
+      error={error}
+      coins={coins}
+      navigation={navigation}
+    />
   );
 };
 

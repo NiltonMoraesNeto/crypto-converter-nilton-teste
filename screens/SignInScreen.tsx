@@ -1,7 +1,7 @@
-import { Alert, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { styles } from "../styles/signin-screen-style";
+import { Alert } from "react-native";
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { FormSignInScreen } from "../components/form-sign-in-screen";
 
 const SignInScreen = ({ navigation }: any) => {
   const [firstName, setFirstName] = useState("");
@@ -39,28 +39,12 @@ const SignInScreen = ({ navigation }: any) => {
     }
   };
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Welcome back {firstName}</Text>
-      <Text style={styles.subtitle}>Sign in to your account</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Username"
-        value={login.username}
-        onChangeText={(text) => setLogin({ ...login, username: text })}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        value={login.password}
-        keyboardType="numeric"
-        maxLength={4}
-        onChangeText={(text) => setLogin({ ...login, password: text })}
-        secureTextEntry={true}
-      />
-      <TouchableOpacity style={styles.button} onPress={handleSignIn}>
-        <Text style={styles.buttonText}>→</Text>
-      </TouchableOpacity>
-    </View>
+    <FormSignInScreen
+      firstName={firstName}
+      handleSignIn={handleSignIn}
+      login={login}
+      setLogin={setLogin}
+    />
   );
 };
 

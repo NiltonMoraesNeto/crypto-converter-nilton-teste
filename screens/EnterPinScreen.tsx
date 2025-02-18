@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import { Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { styles } from "../styles/enter-pin-screen-style";
+import { FormEnterPinScreen } from "../components/form-enter-pin-screen";
 
 const EnterPinScreen = ({ navigation }: any) => {
   const [enteredPin, setEnteredPin] = useState<string>("");
@@ -43,50 +43,13 @@ const EnterPinScreen = ({ navigation }: any) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Enter your PIN</Text>
-
-      {/* Indicadores do PIN */}
-      <View style={styles.pinContainer}>
-        {[...Array(4)].map((_, i) => (
-          <View
-            key={i}
-            style={[styles.pinDot, enteredPin.length > i && styles.filled]}
-          />
-        ))}
-      </View>
-
-      {/* Teclado numérico */}
-      <View style={styles.keyboard}>
-        {["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"].map((num) => (
-          <TouchableOpacity
-            key={num}
-            style={styles.key}
-            onPress={() => handleNumberPress(num)}
-          >
-            <Text style={styles.keyText}>{num}</Text>
-          </TouchableOpacity>
-        ))}
-        <TouchableOpacity style={styles.key} onPress={handleDelete}>
-          <Text style={styles.keyText}>⌫</Text>
-        </TouchableOpacity>
-      </View>
-
-      <TouchableOpacity onPress={handleReset}>
-        <Text style={styles.resetText}>Reset</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={[
-          styles.continueButton,
-          enteredPin.length < 4 && styles.disabled,
-        ]}
-        onPress={handleContinue}
-        disabled={enteredPin.length < 4}
-      >
-        <Text style={styles.continueButtonText}>Continue</Text>
-      </TouchableOpacity>
-    </View>
+    <FormEnterPinScreen
+      enteredPin={enteredPin}
+      handleNumberPress={handleNumberPress}
+      handleDelete={handleDelete}
+      handleReset={handleReset}
+      handleContinue={handleContinue}
+    />
   );
 };
 
