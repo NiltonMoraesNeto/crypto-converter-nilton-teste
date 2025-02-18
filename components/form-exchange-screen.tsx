@@ -44,7 +44,7 @@ export function FormExchangeScreen({
                 style={styles.coinIcon}
               />
               <Text style={styles.coinText}>
-                {fromCoin?.symbol?.toUpperCase()}
+                {fromCoin?.symbol ? fromCoin.symbol.toUpperCase() : "N/A"}
               </Text>
               <Ionicons name="chevron-down" size={16} color="#000" />
             </TouchableOpacity>
@@ -66,7 +66,7 @@ export function FormExchangeScreen({
             >
               <Image source={{ uri: toCoin?.image }} style={styles.coinIcon} />
               <Text style={styles.coinText}>
-                {toCoin?.symbol?.toUpperCase()}
+                {toCoin?.symbol ? toCoin.symbol.toUpperCase() : "N/A"}
               </Text>
               <Ionicons name="chevron-down" size={16} color="#000" />
             </TouchableOpacity>
@@ -77,10 +77,10 @@ export function FormExchangeScreen({
         {/* Taxa de conversão */}
         <Text style={styles.conversionRate}>
           {fromCoin && toCoin
-            ? `1 ${fromCoin.symbol.toUpperCase()} = ${(
-                fromCoin.price / toCoin.price
-              ).toFixed(6)} ${toCoin.symbol.toUpperCase()}`
-            : ""}
+            ? `1 ${fromCoin.symbol?.toUpperCase() || "N/A"} = ${(
+                (fromCoin.price || 1) / (toCoin.price || 1)
+              ).toFixed(6)} ${toCoin.symbol?.toUpperCase() || "N/A"}`
+            : "Selecione as moedas"}
         </Text>
 
         {/* Modal para selecionar a moeda */}
@@ -97,7 +97,7 @@ export function FormExchangeScreen({
                 >
                   <Image source={{ uri: item.image }} style={styles.coinIcon} />
                   <Text style={styles.coinText}>
-                    {item.name} ({item.symbol.toUpperCase()})
+                    {item.name} ({item.symbol?.toUpperCase() || "N/A"})
                   </Text>
                 </TouchableOpacity>
               )}
