@@ -10,6 +10,8 @@ import {
 } from "react-native";
 import { styles } from "../styles/landing-page-screen-style";
 import { FormLandingPageProps } from "../models/form-landing-page-props";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useEffect, useState } from "react";
 
 export function FormLandingPageScreen({
   firstName,
@@ -23,6 +25,17 @@ export function FormLandingPageScreen({
   coins,
   navigation,
 }: FormLandingPageProps) {
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const loadError = async () => {
+    const storedData = await AsyncStorage.getItem("errorLandingPage");
+    setErrorMessage(storedData);
+  };
+
+  useEffect(() => {
+    loadError();
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
@@ -66,6 +79,7 @@ export function FormLandingPageScreen({
       {/* Lista de moedas padrões ou pesquisadas */}
       <View style={styles.bookmarksContainer}>
         <Text style={styles.bookmarkTitle}>Bookmarks</Text>
+        <Text>{errorMessage}</Text>
         {loading ? (
           <ActivityIndicator size="large" color="#23EBC3" />
         ) : error ? (

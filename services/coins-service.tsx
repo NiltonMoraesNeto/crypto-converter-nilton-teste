@@ -7,6 +7,8 @@ export const fetchCryptoData = async (coins: string[]) => {
       coins.map((coin) => api.get<CryptoData>(`coins/${coin}`))
     );
 
+    await AsyncStorage.removeItem("errorLandingPage");
+
     return responses.map(({ data }) => ({
       id: data.id,
       name: data.name,
@@ -14,6 +16,10 @@ export const fetchCryptoData = async (coins: string[]) => {
       image: data.image.small,
     }));
   } catch (error) {
+    await AsyncStorage.setItem(
+      "errorLandingPage",
+      "Error fetching crypto data: " + error
+    );
     console.error("Error fetching crypto data:", error);
     return [];
   }

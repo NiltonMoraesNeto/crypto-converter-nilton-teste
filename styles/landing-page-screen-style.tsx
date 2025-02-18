@@ -89,10 +89,13 @@ export const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#DC143C",
     marginBottom: 10,
+    marginVertical: 20,
+    marginLeft: 20,
   },
   noFavoritesText: {
     fontSize: 14,
     color: "#888",
+    marginLeft: 20,
   },
   favoriteButton: {
     fontSize: 20,
