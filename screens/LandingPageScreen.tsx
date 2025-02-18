@@ -13,7 +13,7 @@ const LandingPage = ({ navigation }: any) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [error, setError] = useState(false);
 
-  const { favoriteCoins, toggleFavorite } = useFavorites(); // 🚀 Obtendo os favoritos
+  const { favoriteCoins, toggleFavorite } = useFavorites();
 
   useEffect(() => {
     loadCryptoData();
@@ -83,9 +83,9 @@ const LandingPage = ({ navigation }: any) => {
       firstName={firstName}
       searchQuery={searchQuery}
       setSearchQuery={setSearchQuery}
-      favoriteCoins={favoriteCoins} // 🚀 Agora os favoritos são globais
+      favoriteCoins={favoriteCoins}
       handleOpenDetails={handleOpenDetails}
-      toggleFavorite={toggleFavorite} // 🚀 Função global
+      toggleFavorite={toggleFavorite}
       loading={loading}
       error={error}
       coins={coins}
