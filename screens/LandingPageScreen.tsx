@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { fetchCryptoData, searchCrypto } from "../services/coins-service";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { FormLandingPageScreen } from "../components/form-landing-page-screen";
-import { useFavorites } from "../context/FavoritesContext"; // 🚀 Importando o contexto
+import { useFavorites } from "../context/FavoritesContext";
 
 const defaultCoins = ["bitcoin", "ethereum", "tether"];
 

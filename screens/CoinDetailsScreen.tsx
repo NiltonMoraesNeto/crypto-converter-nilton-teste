@@ -11,10 +11,10 @@ const CoinDetailsScreen = ({ navigation }: any) => {
   const [coin, setCoin] = useState<CryptoDataDetails>();
   const [idCoin, setIdCoin] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
-  //const [isFavorite, setIsFavorite] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { favoriteCoins, toggleFavorite } = useFavorites();
   const isFavorite = favoriteCoins.some((fav) => fav.id === idCoin);
+
   useEffect(() => {
     const loadCoinDetails = async () => {
       try {
@@ -30,7 +30,6 @@ const CoinDetailsScreen = ({ navigation }: any) => {
 
         const favorites = await AsyncStorage.getItem("favorites");
         const favoritesArray = favorites ? JSON.parse(favorites) : [];
-        //setIsFavorite(favoritesArray.includes(coinId));
       } catch (err: any) {
         if (err.response?.status === 429) {
           setError("Too many requests. Please try again later.");

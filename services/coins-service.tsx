@@ -43,23 +43,22 @@ export const searchCrypto = async (query: string) => {
 
 export const fetchCryptoById = async (coinId: string) => {
   try {
-    //const cacheKey = `crypto_${coinId}`;
-    // const cachedData = await AsyncStorage.getItem(cacheKey);
-
-    // if (cachedData) {
-    //   return JSON.parse(cachedData);
-    // }
-
     const response = await api.get(`/coins/${coinId}`);
     const data = response.data;
-
-    // Armazena no cache por 5 minutos
-    // await AsyncStorage.setItem(cacheKey, JSON.stringify(data));
-    // setTimeout(() => AsyncStorage.removeItem(cacheKey), 5 * 60 * 1000);
 
     return data;
   } catch (error) {
     console.error("Erro ao buscar detalhes da moeda:", error);
     return null;
+  }
+};
+
+export const fetchAllCoins = async () => {
+  try {
+    const { data } = await api.get("coins/list");
+    return data;
+  } catch (error) {
+    console.error("Erro ao buscar lista de todas as moedas:", error);
+    return [];
   }
 };

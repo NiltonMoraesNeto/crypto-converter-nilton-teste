@@ -43,9 +43,7 @@ export function FormExchangeScreen({
                 source={{ uri: fromCoin?.image }}
                 style={styles.coinIcon}
               />
-              <Text style={styles.coinText}>
-                {fromCoin?.symbol ? fromCoin.symbol.toUpperCase() : "N/A"}
-              </Text>
+              <Text style={styles.coinText}>{fromCoin?.name}</Text>
               <Ionicons name="chevron-down" size={16} color="#000" />
             </TouchableOpacity>
             <TextInput
@@ -65,9 +63,7 @@ export function FormExchangeScreen({
               }}
             >
               <Image source={{ uri: toCoin?.image }} style={styles.coinIcon} />
-              <Text style={styles.coinText}>
-                {toCoin?.symbol ? toCoin.symbol.toUpperCase() : "N/A"}
-              </Text>
+              <Text style={styles.coinText}>{toCoin?.name}</Text>
               <Ionicons name="chevron-down" size={16} color="#000" />
             </TouchableOpacity>
             <Text style={styles.convertedValue}>{convertedValue}</Text>
@@ -77,9 +73,9 @@ export function FormExchangeScreen({
         {/* Taxa de conversão */}
         <Text style={styles.conversionRate}>
           {fromCoin && toCoin
-            ? `1 ${fromCoin.symbol?.toUpperCase() || "N/A"} = ${(
+            ? `1 ${toCoin?.name} = ${(
                 (fromCoin.price || 1) / (toCoin.price || 1)
-              ).toFixed(6)} ${toCoin.symbol?.toUpperCase() || "N/A"}`
+              ).toFixed(6)} ${toCoin?.name}`
             : "Selecione as moedas"}
         </Text>
 

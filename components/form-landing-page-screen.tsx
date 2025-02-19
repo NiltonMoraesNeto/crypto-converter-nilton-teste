@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   FlatList,
   ActivityIndicator,
+  ScrollView,
 } from "react-native";
 import { styles } from "../styles/landing-page-screen-style";
 import { FormLandingPageProps } from "../models/form-landing-page-props";
@@ -38,73 +39,83 @@ export function FormLandingPageScreen({
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.welcomeText}>Welcome, {firstName}</Text>
-      </View>
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <View style={styles.header}>
+          <Text style={styles.welcomeText}>Welcome, {firstName}</Text>
+        </View>
 
-      <View style={styles.searchContainer}>
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Search"
-          value={searchQuery}
-          onChangeText={setSearchQuery} // Atualiza o estado ao digitar
-        />
-      </View>
-
-      {/* Lista de moedas favoritas */}
-      <View style={styles.favoritesContainer}>
-        <Text style={styles.favoritesTitle}>Favorites</Text>
-        {favoriteCoins.length === 0 ? (
-          <Text style={styles.noFavoritesText}>No favorite coins yet.</Text>
-        ) : (
-          <FlatList
-            data={favoriteCoins}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
-              <TouchableOpacity onPress={() => handleOpenDetails(item.id)}>
-                <View style={styles.coinItem}>
-                  <Image source={{ uri: item.image }} style={styles.coinIcon} />
-                  <Text style={styles.coinName}>{item.name}</Text>
-                  <Text style={styles.coinPrice}>≈ R$ {item.price}</Text>
-                  <TouchableOpacity onPress={() => toggleFavorite(item.id)}>
-                    <Text style={styles.favoriteButton}>★</Text>
-                  </TouchableOpacity>
-                </View>
-              </TouchableOpacity>
-            )}
+        <View style={styles.searchContainer}>
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Search"
+            value={searchQuery}
+            onChangeText={setSearchQuery}
           />
-        )}
-      </View>
+        </View>
 
-      {/* Lista de moedas padrões ou pesquisadas */}
-      <View style={styles.bookmarksContainer}>
-        <Text style={styles.bookmarkTitle}>Bookmarks</Text>
-        <Text>{errorMessage}</Text>
-        {loading ? (
-          <ActivityIndicator size="large" color="#23EBC3" />
-        ) : error ? (
-          <Text style={styles.errorText}>
-            Failed to load data. Please try again later.
-          </Text>
-        ) : (
-          <FlatList
-            data={coins}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
-              <TouchableOpacity onPress={() => handleOpenDetails(item.id)}>
-                <View style={styles.coinItem}>
-                  <Image source={{ uri: item.image }} style={styles.coinIcon} />
-                  <Text style={styles.coinName}>{item.name}</Text>
-                  <Text style={styles.coinPrice}>≈ R$ {item.price}</Text>
-                  <TouchableOpacity onPress={() => toggleFavorite(item.id)}>
-                    <Text style={styles.favoriteButton}>☆</Text>
-                  </TouchableOpacity>
-                </View>
-              </TouchableOpacity>
-            )}
-          />
-        )}
-      </View>
+        {/* Lista de moedas favoritas */}
+        <View style={styles.favoritesContainer}>
+          <Text style={styles.favoritesTitle}>Favorites</Text>
+          {favoriteCoins.length === 0 ? (
+            <Text style={styles.noFavoritesText}>No favorite coins yet.</Text>
+          ) : (
+            <FlatList
+              data={favoriteCoins}
+              keyExtractor={(item) => item.id}
+              renderItem={({ item }) => (
+                <TouchableOpacity onPress={() => handleOpenDetails(item.id)}>
+                  <View style={styles.coinItem}>
+                    <Image
+                      source={{ uri: item.image }}
+                      style={styles.coinIcon}
+                    />
+                    <Text style={styles.coinName}>{item.name}</Text>
+                    <Text style={styles.coinPrice}>≈ R$ {item.price}</Text>
+                    <TouchableOpacity onPress={() => toggleFavorite(item.id)}>
+                      <Text style={styles.favoriteButton}>★</Text>
+                    </TouchableOpacity>
+                  </View>
+                </TouchableOpacity>
+              )}
+              scrollEnabled={false}
+            />
+          )}
+        </View>
+
+        <View style={styles.bookmarksContainer}>
+          <Text style={styles.bookmarkTitle}>Bookmarks</Text>
+          <Text>{errorMessage}</Text>
+          {loading ? (
+            <ActivityIndicator size="large" color="#23EBC3" />
+          ) : error ? (
+            <Text style={styles.errorText}>
+              Failed to load data. Please try again later.
+            </Text>
+          ) : (
+            <FlatList
+              data={coins}
+              keyExtractor={(item) => item.id}
+              renderItem={({ item }) => (
+                <TouchableOpacity onPress={() => handleOpenDetails(item.id)}>
+                  <View style={styles.coinItem}>
+                    <Image
+                      source={{ uri: item.image }}
+                      style={styles.coinIcon}
+                    />
+                    <Text style={styles.coinName}>{item.name}</Text>
+                    <Text style={styles.coinPrice}>≈ R$ {item.price}</Text>
+                    <TouchableOpacity onPress={() => toggleFavorite(item.id)}>
+                      <Text style={styles.favoriteButton}>☆</Text>
+                    </TouchableOpacity>
+                  </View>
+                </TouchableOpacity>
+              )}
+              scrollEnabled={false}
+            />
+          )}
+        </View>
+      </ScrollView>
+
       <TouchableOpacity
         style={styles.floatingButton}
         onPress={() => navigation.navigate("ExchangeScreen")}
